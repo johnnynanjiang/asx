@@ -12,7 +12,7 @@ import java.nio.charset.Charset
 class SectorTest {
     @Test
     fun testGettingJsonDataFromUrl() {
-        val indexJsonDataString = Sector.getJsonStringFromUrl("https://au.spindices.com/indices/equity/sp-asx-200-utilities-sector")
+        val indexJsonDataString = Sector().getSectorPerformanceJsonStringFromUrl("https://au.spindices.com/indices/equity/sp-asx-200-utilities-sector")
 
         assertTrue(indexJsonDataString.startsWith("{\"status\":true,"))
     }
@@ -20,7 +20,7 @@ class SectorTest {
     @Test
     fun testGettingSectorPerformance() {
         val indexJsonDataString = TestUtils.loadFileToString("index_data_for_industry_sector.json")
-        val sectorPerformance = Sector.getSectorPerformanceDetailsFromJsonString(indexJsonDataString)
+        val sectorPerformance = Sector().getSectorPerformanceDetailsFromJsonString(indexJsonDataString)
 
         assertTrue(sectorPerformance.returns.oneYearReturn.toString().startsWith("-13.56"))
         assertTrue(sectorPerformance.returns.threeYearReturn.toString().startsWith("3.55"))
