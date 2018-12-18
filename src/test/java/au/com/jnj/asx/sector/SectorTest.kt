@@ -20,7 +20,7 @@ class SectorTest {
     @Test
     fun testGettingSectorPerformance() {
         val indexJsonDataString = TestUtils.loadFileToString("index_data_for_industry_sector.json")
-        val sectorPerformance = Sector().getSectorPerformanceDetailsFromJsonString(indexJsonDataString)
+        val sectorPerformance = Sector().getSectorPerformanceListFromJsonString(indexJsonDataString)
 
         assertTrue(sectorPerformance.returns.oneYearReturn.toString().startsWith("-13.56"))
         assertTrue(sectorPerformance.returns.threeYearReturn.toString().startsWith("3.55"))
@@ -32,7 +32,7 @@ class SectorTest {
 class TestUtils {
     companion object {
         fun loadFileToString(filepath: String, charset: Charset = Charsets.ISO_8859_1) : String {
-            return File(this.javaClass.classLoader.getResource(filepath).file)
+            return File(TestUtils::class.java.classLoader.getResource(filepath).file)
                     .readText(charset)
         }
     }

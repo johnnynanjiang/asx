@@ -9,12 +9,12 @@ import org.jsoup.nodes.Document
  */
 
 class Sector {
-    fun getPerformanceDetailsFromUrl(url: String): SectorPerformance =
-            getSectorPerformanceDetailsFromJsonString(getSectorPerformanceJsonStringFromUrl(url))
+    fun getPerformanceListFromUrl(url: String): SectorPerformance =
+            getSectorPerformanceListFromJsonString(getSectorPerformanceJsonStringFromUrl(url))
 
     internal fun getSectorPerformanceJsonStringFromUrl(url: String): String {
         val doc: Document = Jsoup.connect(url).timeout(10 * 1000).get()
-        val bodyTag = doc.getElementsByTag("body")[0] // TODO: get index data from body text directly for fault tolerance
+        //val bodyTag = doc.getElementsByTag("body")[0] // TODO: get index data from body text directly for fault tolerance
         val scriptTags = doc.getElementsByTag("script")
         val scriptTagWithData = scriptTags[11]
         val scriptCodeBlock = scriptTagWithData.childNodes()[0].attributes().get("data")
@@ -22,7 +22,7 @@ class Sector {
         return scriptCodeBlock.substringAfter("var indexData = ").substringBefore(";")
     }
 
-    internal fun getSectorPerformanceDetailsFromJsonString(jsonString: String): SectorPerformance {
+    internal fun getSectorPerformanceListFromJsonString(jsonString: String): SectorPerformance {
         val jsonObject = JSONObject(jsonString)
         val indexPerformanceHolder = jsonObject.get("indexPerformanceHolder") as JSONObject
         val indexPerformance = indexPerformanceHolder.get("indexPerformance") as JSONObject
