@@ -9,10 +9,17 @@ import org.jsoup.nodes.Document
  */
 
 class Sector {
-    fun getPerformanceListFromUrl(url: String): SectorPerformance =
-            getSectorPerformanceListFromJsonString(getSectorPerformanceJsonStringFromUrl(url))
+    fun getPerformanceForSector(sectorDefinition: SectorDefinitions): SectorPerformance {
+        return SectorPerformance(
+                sectorDefinition,
+                returns = getReturnsFromUrl(sectorDefinition.url)
+        )
+    }
 
-    internal fun getSectorPerformanceJsonStringFromUrl(url: String): String {
+    internal fun getReturnsFromUrl(url: String): SectorPerformance.Returns =
+            getReturnsFromJsonString(getPerformanceJsonStringFromUrl(url))
+
+    internal fun getPerformanceJsonStringFromUrl(url: String): String {
         val doc: Document = Jsoup.connect(url).timeout(10 * 1000).get()
         //val bodyTag = doc.getElementsByTag("body")[0] // TODO: get index data from body text directly for fault tolerance
         val scriptTags = doc.getElementsByTag("script")
@@ -22,22 +29,21 @@ class Sector {
         return scriptCodeBlock.substringAfter("var indexData = ").substringBefore(";")
     }
 
-    internal fun getSectorPerformanceListFromJsonString(jsonString: String): SectorPerformance {
+    internal fun getReturnsFromJsonString(jsonString: String): SectorPerformance.Returns {
         val jsonObject = JSONObject(jsonString)
         val indexPerformanceHolder = jsonObject.get("indexPerformanceHolder") as JSONObject
         val indexPerformance = indexPerformanceHolder.get("indexPerformance") as JSONObject
         val priceReturn = indexPerformance.get("priceReturn") as JSONObject
 
-        return SectorPerformance(0.0,
-                SectorPerformance.Returns(
-                        priceReturn.get("dailyReturn") as Double,
-                        priceReturn.get("monthToDateReturn") as Double,
-                        priceReturn.get("quarterToDateReturn") as Double,
-                        priceReturn.get("yearToDateReturn") as Double,
-                        priceReturn.get("oneYearReturn") as Double,
-                        priceReturn.get("threeYearReturn") as Double,
-                        priceReturn.get("fiveYearReturn") as Double,
-                        priceReturn.get("tenYearReturn") as Double
-                ))
+        return SectorPerformance.Returns(
+                priceReturn.get("dailyReturn") as Double,
+                priceReturn.get("monthToDateReturn") as Double,
+                priceReturn.get("quarterToDateReturn") as Double,
+                priceReturn.get("yearToDateReturn") as Double,
+                priceReturn.get("oneYearReturn") as Double,
+                priceReturn.get("threeYearReturn") as Double,
+                priceReturn.get("fiveYearReturn") as Double,
+                priceReturn.get("tenYearReturn") as Double
+        )
     }
 }

@@ -3,6 +3,7 @@ package au.com.jnj.asx.sector
 import org.supercsv.io.CsvBeanWriter
 import org.supercsv.prefs.CsvPreference
 import java.io.PrintWriter
+import java.util.*
 
 /**
  * Created by nanjiang on 16/12/18.
@@ -20,22 +21,76 @@ class Sectors {
             return _performanceList!!
         }
 
-    fun getPerformanceListForAllSectors() : List<SectorPerformance> {
-        val PerformanceListList: MutableList<SectorPerformance> = mutableListOf()
+    fun getPerformanceListForAllSectors(): List<SectorPerformance> {
+        var performanceList: MutableList<SectorPerformance> = mutableListOf()
 
         for (sectorDefinition in SectorDefinitions.values()) {
-            val performanceList = Sector().getPerformanceListFromUrl(sectorDefinition.url)
-            PerformanceListList.add(performanceList)
+            val performance = Sector().getPerformanceForSector(sectorDefinition)
+            performanceList.add(performance)
 
-            Thread.sleep(1000)
             System.out.println("getPerformanceListForAllSectors() - " + sectorDefinition.description)
         }
 
-        return PerformanceListList
+        return sortPerformanceList(performanceList)
     }
 
-    internal fun sortPerformanceList() : List<SectorPerformance> {
-        //Collections.sort(this.performanceList, )
+    internal fun sortPerformanceList(performanceList: List<SectorPerformance>): List<SectorPerformance> {
+        Collections.sort(
+                performanceList,
+                { performanceA, performanceB ->
+                    Int
+                    var compareResult = performanceB.returns.tenYearReturn.compareTo(
+                            performanceA.returns.tenYearReturn)
+                    if (compareResult != 0) {
+                        compareResult
+                    }
+
+                    compareResult = performanceB.returns.fiveYearReturn.compareTo(
+                            performanceA.returns.fiveYearReturn)
+
+                    if (compareResult != 0) {
+                        compareResult
+                    }
+
+                    compareResult = performanceB.returns.threeYearReturn.compareTo(
+                            performanceA.returns.threeYearReturn)
+
+                    if (compareResult != 0) {
+                        compareResult
+                    }
+
+                    compareResult = performanceB.returns.oneYearReturn.compareTo(
+                            performanceA.returns.oneYearReturn)
+
+                    if (compareResult != 0) {
+                        compareResult
+                    }
+
+                    compareResult = performanceB.returns.yearToDateReturn.compareTo(
+                            performanceA.returns.yearToDateReturn)
+
+                    if (compareResult != 0) {
+                        compareResult
+                    }
+
+                    compareResult = performanceB.returns.quarterToDateReturn.compareTo(
+                            performanceA.returns.quarterToDateReturn)
+
+                    if (compareResult != 0) {
+                        compareResult
+                    }
+
+                    compareResult = performanceB.returns.monthToDateReturn.compareTo(
+                            performanceA.returns.monthToDateReturn)
+
+                    if (compareResult != 0) {
+                        compareResult
+                    }
+
+                    performanceB.returns.dailyReturn.compareTo(performanceA.returns.dailyReturn)
+                }
+        )
+
         return performanceList
     }
 
@@ -62,8 +117,8 @@ class Sectors {
                 "fiveYearReturn",
                 "tenYearReturn")
         beanWriter.writeHeader(*headers)
-        for (performanceDetail in performanceList) {
-            beanWriter.write(performanceDetail.returns, *headers)
+        for (performance in performanceList) {
+            beanWriter.write(performance.returns, *headers)
         }
 
         beanWriter.flush()
