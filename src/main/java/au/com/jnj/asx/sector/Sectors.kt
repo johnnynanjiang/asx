@@ -76,14 +76,14 @@ class Sectors {
                             performanceA.returns.quarterToDateReturn)
 
                     if (compareResult != 0) {
-                        compareResult
+                        return compareResult
                     }
 
                     compareResult = performanceB.returns.monthToDateReturn.compareTo(
                             performanceA.returns.monthToDateReturn)
 
                     if (compareResult != 0) {
-                        compareResult
+                        return compareResult
                     }
 
                     return performanceB.returns.dailyReturn.compareTo(performanceA.returns.dailyReturn)
