@@ -37,40 +37,39 @@ class Sectors {
     internal fun sortPerformanceList(performanceList: List<SectorPerformance>): List<SectorPerformance> {
         Collections.sort(
                 performanceList,
-                { performanceA, performanceB ->
-                    Int
+                fun(performanceA, performanceB) : Int {
                     var compareResult = performanceB.returns.tenYearReturn.compareTo(
                             performanceA.returns.tenYearReturn)
                     if (compareResult != 0) {
-                        compareResult
+                        return compareResult
                     }
 
                     compareResult = performanceB.returns.fiveYearReturn.compareTo(
                             performanceA.returns.fiveYearReturn)
 
                     if (compareResult != 0) {
-                        compareResult
+                        return compareResult
                     }
 
                     compareResult = performanceB.returns.threeYearReturn.compareTo(
                             performanceA.returns.threeYearReturn)
 
                     if (compareResult != 0) {
-                        compareResult
+                        return compareResult
                     }
 
                     compareResult = performanceB.returns.oneYearReturn.compareTo(
                             performanceA.returns.oneYearReturn)
 
                     if (compareResult != 0) {
-                        compareResult
+                        return compareResult
                     }
 
                     compareResult = performanceB.returns.yearToDateReturn.compareTo(
                             performanceA.returns.yearToDateReturn)
 
                     if (compareResult != 0) {
-                        compareResult
+                        return compareResult
                     }
 
                     compareResult = performanceB.returns.quarterToDateReturn.compareTo(
@@ -87,7 +86,7 @@ class Sectors {
                         compareResult
                     }
 
-                    performanceB.returns.dailyReturn.compareTo(performanceA.returns.dailyReturn)
+                    return performanceB.returns.dailyReturn.compareTo(performanceA.returns.dailyReturn)
                 }
         )
 
@@ -108,6 +107,7 @@ class Sectors {
                 "10 Years Return")
         */
         val headers = arrayOf(
+                "name",
                 "dailyReturn",
                 "monthToDateReturn",
                 "quarterToDateReturn",
@@ -118,7 +118,7 @@ class Sectors {
                 "tenYearReturn")
         beanWriter.writeHeader(*headers)
         for (performance in performanceList) {
-            beanWriter.write(performance.returns, *headers)
+            beanWriter.write(performance, *headers)
         }
 
         beanWriter.flush()

@@ -16,4 +16,32 @@ data class SectorPerformance(val sectorDefinition: SectorDefinitions,
                        val threeYearReturn: Double = 0.0,
                        val fiveYearReturn: Double = 0.0,
                        val tenYearReturn: Double = 0.0)
+
+    // the following getters are workaround to get CSV BeanWriter to read fields
+    val name: String
+        get() = this.sectorDefinition.description
+
+    val dailyReturn: Double
+        get() = this.returns.dailyReturn
+
+    val monthToDateReturn: Double
+        get() = this.returns.monthToDateReturn
+
+    val quarterToDateReturn: Double
+        get() = this.returns.quarterToDateReturn
+
+    val yearToDateReturn: Double
+        get() = this.returns.yearToDateReturn
+
+    val oneYearReturn: Double
+        get() = this.returns.oneYearReturn
+
+    val threeYearReturn: Double
+        get() = this.returns.threeYearReturn
+
+    val fiveYearReturn: Double
+        get() = this.returns.fiveYearReturn
+
+    val tenYearReturn: Double
+        get() = this.returns.tenYearReturn
 }
