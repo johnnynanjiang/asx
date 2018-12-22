@@ -18,6 +18,7 @@ class SectorsTest {
         sectors.getPerformanceListInCSV(performanceList)
 
         assertEquals(15, performanceList.size)
+        assertTrue(performanceList[0].name.equals(SectorDefinitions.HEALTH_CARE))
     }
 
     @Test
@@ -44,11 +45,11 @@ class SectorsTest {
                 sectors.sortPerformanceList(performanceList)
         )
 
-        assertTrue(performanceList[0].name.equals(SectorDefinitions.FINANCIAL))
-        assertTrue(performanceList[1].name.equals(SectorDefinitions.A_REIT))
-        assertTrue(performanceList[2].name.equals(SectorDefinitions.ENERGY))
-        assertTrue(performanceList[3].name.equals(SectorDefinitions.COMMUNICATION_SERVICES))
-        assertTrue(performanceList[4].name.equals(SectorDefinitions.CONSUMER_STAPLES))
+        assertTrue(performanceList[0].name == SectorDefinitions.FINANCIAL.description)
+        assertTrue(performanceList[1].name == SectorDefinitions.A_REIT.description)
+        assertTrue(performanceList[2].name == SectorDefinitions.ENERGY.description)
+        assertTrue(performanceList[3].name == SectorDefinitions.COMMUNICATION_SERVICES.description)
+        assertTrue(performanceList[4].name == SectorDefinitions.CONSUMER_STAPLES.description)
 
         assertEquals(1.82, performanceList[1].tenYearReturn, 0.0)
     }

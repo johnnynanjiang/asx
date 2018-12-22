@@ -95,17 +95,6 @@ class Sectors {
 
     internal fun getPerformanceListInCSV(performanceList: List<SectorPerformance>) {
         val beanWriter = CsvBeanWriter(PrintWriter(System.out), CsvPreference.STANDARD_PREFERENCE)
-        /*
-        val header = arrayOf(
-                "Daily Return",
-                "Monthly Return",
-                "Quarterly Return",
-                "Yearly Return",
-                "1 Year Return",
-                "3 Years Return",
-                "5 Years Return",
-                "10 Years Return")
-        */
         val headers = arrayOf(
                 "name",
                 "dailyReturn",
@@ -116,12 +105,16 @@ class Sectors {
                 "threeYearReturn",
                 "fiveYearReturn",
                 "tenYearReturn")
-        beanWriter.writeHeader(*headers)
-        for (performance in performanceList) {
-            beanWriter.write(performance, *headers)
-        }
 
-        beanWriter.flush()
-        beanWriter.close()
+        try {
+            beanWriter.writeHeader(*headers)
+            for (performance in performanceList) {
+                beanWriter.write(performance, *headers)
+            }
+        } catch (e: Throwable) {
+            throw e
+        } finally {
+            // beanWriter.close() // ToDo: comment it out as it breaks the unit test for some reason
+        }
     }
 }

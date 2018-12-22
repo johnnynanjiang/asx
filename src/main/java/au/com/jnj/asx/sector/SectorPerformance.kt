@@ -1,7 +1,6 @@
 package au.com.jnj.asx.sector
 
 import java.text.DecimalFormat
-import java.text.NumberFormat
 
 /**
  * Created by nanjiang on 16/12/18.
