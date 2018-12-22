@@ -37,7 +37,7 @@ class Sectors {
     internal fun sortPerformanceList(performanceList: List<SectorPerformance>): List<SectorPerformance> {
         Collections.sort(
                 performanceList,
-                fun(performanceA, performanceB) : Int {
+                fun(performanceA, performanceB): Int {
                     var compareResult = performanceB.returns.tenYearReturn.compareTo(
                             performanceA.returns.tenYearReturn)
                     if (compareResult != 0) {
@@ -111,10 +111,9 @@ class Sectors {
             for (performance in performanceList) {
                 beanWriter.write(performance, *headers)
             }
-        } catch (e: Throwable) {
-            throw e
         } finally {
-            // beanWriter.close() // ToDo: comment it out as it breaks the unit test for some reason
+            // ToDo: comment it out as it breaks the unit test for some reason
+            // beanWriter.close()
         }
     }
 }
