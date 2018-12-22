@@ -4,7 +4,7 @@ package au.com.jnj.asx.sector
  * Created by nanjiang on 16/12/18.
  */
 
-private const val NOT_APPLICABLE = "N/A"
+const val NOT_APPLICABLE = "N/A"
 
 enum class SectorDefinitions(val url: String, val code: String = NOT_APPLICABLE, val description: String = NOT_APPLICABLE) {
     ORDINARIES_GOLD(
