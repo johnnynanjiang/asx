@@ -10,17 +10,6 @@ import java.util.*
  */
 
 class Sectors {
-    private var _performanceList: List<SectorPerformance>? = null
-
-    val performanceList: List<SectorPerformance>
-        @Synchronized get() {
-            if (_performanceList == null) {
-                _performanceList = getPerformanceListForAllSectors()
-            }
-
-            return _performanceList!!
-        }
-
     fun getPerformanceListForAllSectors(): List<SectorPerformance> {
         var performanceList: MutableList<SectorPerformance> = mutableListOf()
 
@@ -34,6 +23,7 @@ class Sectors {
         return sortPerformanceList(performanceList)
     }
 
+    // ToDo: apply Functional Programming with immutable list
     internal fun sortPerformanceList(performanceList: List<SectorPerformance>): List<SectorPerformance> {
         Collections.sort(
                 performanceList,

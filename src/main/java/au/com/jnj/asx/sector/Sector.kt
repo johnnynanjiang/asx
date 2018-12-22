@@ -1,7 +1,7 @@
 package au.com.jnj.asx.sector
 
+import au.com.jnj.asx.util.WebCrawler
 import org.json.JSONObject
-import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
 /**
@@ -12,16 +12,17 @@ class Sector {
     fun getPerformanceForSector(sectorDefinition: SectorDefinitions): SectorPerformance {
         return SectorPerformance(
                 sectorDefinition,
-                returns = getReturnsFromUrl(sectorDefinition.url)
+                returns = fetchReturnsFromUrl(sectorDefinition.url)
         )
     }
 
-    internal fun getReturnsFromUrl(url: String): SectorPerformance.Returns =
-            getReturnsFromJsonString(getPerformanceJsonStringFromUrl(url))
+    internal fun fetchReturnsFromUrl(url: String): SectorPerformance.Returns =
+            extractReturnsFromJsonString(fetchPerformanceJsonStringFromUrl(url))
 
-    internal fun getPerformanceJsonStringFromUrl(url: String): String {
-        val doc: Document = Jsoup.connect(url).timeout(10 * 1000).get()
-        //val bodyTag = doc.getElementsByTag("body")[0] // TODO: get index data from body text directly for fault tolerance
+    internal fun fetchPerformanceJsonStringFromUrl(url: String): String {
+        val doc: Document = WebCrawler.fetchFromUrl(url)
+        // TODO: get index data from body text directly for fault tolerance
+        //val bodyTag = doc.getElementsByTag("body")[0]
         val scriptTags = doc.getElementsByTag("script")
         val scriptTagWithData = scriptTags[11]
         val scriptCodeBlock = scriptTagWithData.childNodes()[0].attributes().get("data")
@@ -29,7 +30,7 @@ class Sector {
         return scriptCodeBlock.substringAfter("var indexData = ").substringBefore(";")
     }
 
-    internal fun getReturnsFromJsonString(jsonString: String): SectorPerformance.Returns {
+    internal fun extractReturnsFromJsonString(jsonString: String): SectorPerformance.Returns {
         val jsonObject = JSONObject(jsonString)
         val indexPerformanceHolder = jsonObject.get("indexPerformanceHolder") as JSONObject
         val indexPerformance = indexPerformanceHolder.get("indexPerformance") as JSONObject
