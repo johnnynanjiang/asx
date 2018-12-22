@@ -10,14 +10,14 @@ import java.util.*
  */
 
 class Sectors {
-    fun getPerformanceListForAllSectors(): List<SectorPerformance> {
+    fun fetchPerformanceListForAllSectors(): List<SectorPerformance> {
         var performanceList: MutableList<SectorPerformance> = mutableListOf()
 
         for (sectorDefinition in SectorDefinitions.values()) {
             val performance = Sector().getPerformanceForSector(sectorDefinition)
             performanceList.add(performance)
 
-            System.out.println("getPerformanceListForAllSectors() - " + sectorDefinition.description)
+            System.out.println("fetchPerformanceListForAllSectors() - " + sectorDefinition.description)
         }
 
         return sortPerformanceList(performanceList)
@@ -83,7 +83,7 @@ class Sectors {
         return performanceList
     }
 
-    internal fun getPerformanceListInCSV(performanceList: List<SectorPerformance>) {
+    internal fun outputPerformanceListInCSV(performanceList: List<SectorPerformance>) {
         val beanWriter = CsvBeanWriter(PrintWriter(System.out), CsvPreference.STANDARD_PREFERENCE)
         val headers = arrayOf(
                 "name",

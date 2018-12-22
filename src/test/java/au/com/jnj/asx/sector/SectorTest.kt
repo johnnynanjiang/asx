@@ -11,14 +11,14 @@ import java.nio.charset.Charset
 
 class SectorTest {
     @Test
-    fun testGettingJsonDataFromUrl() {
+    fun testFetchingJsonDataFromUrl() {
         val indexJsonDataString = Sector().fetchPerformanceJsonStringFromUrl("https://au.spindices.com/indices/equity/sp-asx-200-utilities-sector")
 
         assertTrue(indexJsonDataString.startsWith("{\"status\":true,"))
     }
 
     @Test
-    fun testGettingSectorPerformance() {
+    fun testExtractingSectorPerformance() {
         val indexJsonDataString = TestUtils.loadFileToString("index_data_for_industry_sector.json")
         val returns = Sector().extractReturnsFromJsonString(indexJsonDataString)
 
