@@ -22,7 +22,7 @@ data class SectorPerformance(val sectorDefinition: SectorDefinitions,
     private fun formatDouble(double: Double): Double =
             DecimalFormat("#.##").format(double).toDouble()
 
-    // the following getters are a workaround to get CSV BeanWriter to read fields
+    // the following getters are a workaround to get Csv BeanWriter to read fields
     val name: String
         get() = this.sectorDefinition.description
 

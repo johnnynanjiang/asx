@@ -10,8 +10,9 @@ import org.jsoup.nodes.Document
 class WebCrawler {
     companion object {
         private const val TIMEOUT = 10 * 1000
+        private const val USER_AGENT = "Mozilla"
 
         fun fetchFromUrl(url: String): Document =
-                Jsoup.connect(url).timeout(TIMEOUT).get()
+                Jsoup.connect(url).userAgent(USER_AGENT).timeout(TIMEOUT).get()
     }
 }

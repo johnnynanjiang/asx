@@ -83,7 +83,7 @@ class Sectors {
         return performanceList
     }
 
-    internal fun outputPerformanceListInCSV(performanceList: List<SectorPerformance>) {
+    internal fun outputPerformanceListInCsv(performanceList: List<SectorPerformance>) {
         val beanWriter = CsvBeanWriter(PrintWriter(System.out), CsvPreference.STANDARD_PREFERENCE)
         val headers = arrayOf(
                 "name",

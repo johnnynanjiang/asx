@@ -15,14 +15,14 @@ class SectorsTest {
         val sectors = Sectors()
 
         val performanceList = sectors.fetchPerformanceListForAllSectors()
-        sectors.outputPerformanceListInCSV(performanceList)
+        sectors.outputPerformanceListInCsv(performanceList)
 
         assertEquals(15, performanceList.size)
         assertTrue(performanceList[0].name.equals(SectorDefinitions.HEALTH_CARE))
     }
 
     @Test
-    fun testOutputtingPerformanceListInCSV() {
+    fun testOutputtingPerformanceListInCsv() {
         val performanceList = listOf(
                 SectorPerformance(
                         SectorDefinitions.A_REIT,
@@ -41,7 +41,7 @@ class SectorsTest {
                         returns = SectorPerformance.Returns(3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8123)))
 
         val sectors = Sectors()
-        sectors.outputPerformanceListInCSV(
+        sectors.outputPerformanceListInCsv(
                 sectors.sortPerformanceList(performanceList)
         )
 
