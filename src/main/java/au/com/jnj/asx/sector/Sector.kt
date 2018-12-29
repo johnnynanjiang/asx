@@ -17,7 +17,8 @@ class Sector {
     }
 
     internal fun fetchReturnsFromUrl(url: String): SectorPerformance.Returns =
-            extractReturnsFromJsonString(fetchPerformanceJsonStringFromUrl(url))
+            extractReturnsFromJsonString(
+                    fetchPerformanceJsonStringFromUrl(url))
 
     internal fun fetchPerformanceJsonStringFromUrl(url: String): String {
         val doc: Document = WebCrawler.fetchFromUrl(url)

@@ -1,5 +1,6 @@
 package au.com.jnj.asx.sector
 
+import au.com.jnj.asx.util.Integration
 import org.junit.Assert.*
 import org.junit.Ignore
 import org.junit.Test
@@ -11,6 +12,7 @@ import org.junit.Test
 class SectorsTest {
     @Test
     @Ignore
+    @Integration
     fun testFetchingPerformanceListForAllSectors() {
         val sectors = Sectors()
 

@@ -13,7 +13,14 @@ import java.time.format.DateTimeFormatter
 class Company(val name: String = NOT_APPLICABLE, val stockCode: String = NOT_APPLICABLE) {
 
     fun fetchStockDetailsByStockCode(stockCode: String): StockDetails =
-            fetchStockDetailsFromStockCode(stockCode)
+            extractStockDetailsFromCsvString(
+                    fetchStockPriceHistoryInCsvStringFromStockCode(stockCode))
+
+    internal fun extractStockDetailsFromCsvString(csvString: String): StockDetails {
+        val csvRows = csvString.split(" ")
+        val latestPriceDate = getLatestPriceDate(csvRows)
+        return StockDetails(stockCode, latestPriceDate)
+    }
 
     internal fun getUrlFromStockCode(stockCode: String): String =
             "https://www.marketindex.com.au/sites/default/files/historical-data/${stockCode.toUpperCase()}.csv"
@@ -29,12 +36,9 @@ class Company(val name: String = NOT_APPLICABLE, val stockCode: String = NOT_APP
         return null
     }
 
-    private fun fetchStockDetailsFromStockCode(stockCode: String): StockDetails {
+    private fun fetchStockPriceHistoryInCsvStringFromStockCode(stockCode: String): String {
         val doc = WebCrawler.fetchFromUrl(getUrlFromStockCode(stockCode))
-        val csvString = (doc.childNodes()[0].childNodes()[1].childNodes()[0] as TextNode).text()
-        val csvRows = csvString.split(" ")
-        val latestPriceDate = getLatestPriceDate(csvRows)
-        return StockDetails(stockCode, latestPriceDate)
+        return (doc.childNodes()[0].childNodes()[1].childNodes()[0] as TextNode).text()
     }
 
     data class StockDetails(val stockCode: String = NOT_APPLICABLE,

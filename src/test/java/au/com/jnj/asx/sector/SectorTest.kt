@@ -1,7 +1,10 @@
 package au.com.jnj.asx.sector
 
+import au.com.jnj.asx.util.Integration
+import au.com.jnj.asx.util.TestUtils
 import org.junit.Test
 import org.junit.Assert.*
+import org.junit.Ignore
 import java.io.*
 import java.nio.charset.Charset
 
@@ -11,6 +14,8 @@ import java.nio.charset.Charset
 
 class SectorTest {
     @Test
+    @Ignore
+    @Integration
     fun testFetchingJsonDataFromUrl() {
         val indexJsonDataString = Sector().fetchPerformanceJsonStringFromUrl("https://au.spindices.com/indices/equity/sp-asx-200-utilities-sector")
 
@@ -26,14 +31,5 @@ class SectorTest {
         assertTrue(returns.threeYearReturn.toString().startsWith("3.55"))
         assertTrue(returns.fiveYearReturn.toString().startsWith("6.67"))
         assertTrue(returns.tenYearReturn.toString().startsWith("6.116"))
-    }
-}
-
-class TestUtils {
-    companion object {
-        fun loadFileToString(filepath: String, charset: Charset = Charsets.ISO_8859_1) : String {
-            return File(TestUtils::class.java.classLoader.getResource(filepath).file)
-                    .readText(charset)
-        }
     }
 }
