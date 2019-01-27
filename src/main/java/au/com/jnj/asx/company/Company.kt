@@ -17,17 +17,33 @@ class Company(val name: String = NOT_APPLICABLE, val stockCode: String = NOT_APP
                     fetchStockPriceHistoryInCsvStringFromStockCode(stockCode))
 
     internal fun extractStockDetailsFromCsvString(csvString: String): StockDetails {
-        val csvRows = csvString.split(" ")
+        val csvRows = removeEmptyRows(csvString.split(" "))
         val latestPriceDate = getLatestPriceDate(csvRows)
-        return StockDetails(stockCode, latestPriceDate)
+        val firstPriceDate = getFirstPriceDate(csvRows)
+        return StockDetails(stockCode, latestPriceDate, firstPriceDate)
     }
 
-    internal fun getUrlFromStockCode(stockCode: String): String =
+    internal fun getCsvUrlFromStockCode(stockCode: String): String =
             "https://www.marketindex.com.au/sites/default/files/historical-data/${stockCode.toUpperCase()}.csv"
 
-    internal fun getLatestPriceDate(csvRows: List<String>): LocalDate? {
+    private fun removeEmptyRows(csvRows: List<String>): List<String> {
+        return csvRows.filter { !it.isNullOrBlank() }
+    }
+
+    private fun getLatestPriceDate(csvRows: List<String>): LocalDate? =
+            getDateByRowIndex(csvRows, 1)
+
+    private fun getFirstPriceDate(csvRows: List<String>): LocalDate? =
+            getDateByRowIndex(csvRows, csvRows.count() - 1)
+
+    private fun getDateByRowIndex(csvRows: List<String>, rowIndex: Int): LocalDate? {
         if (csvRows.count() > 1) {
-            val csvRow = csvRows[1].split(",")
+            val csvRow = csvRows[rowIndex].split(",")
+
+            if (csvRow.toString().isNullOrBlank()) {
+                return null
+            }
+
             if (csvRow.count() > 0) {
                 return LocalDate.parse(csvRow[0], DateTimeFormatter.ofPattern("dd/MM/yyyy"))
             }
@@ -37,12 +53,13 @@ class Company(val name: String = NOT_APPLICABLE, val stockCode: String = NOT_APP
     }
 
     private fun fetchStockPriceHistoryInCsvStringFromStockCode(stockCode: String): String {
-        val doc = WebCrawler.fetchFromUrl(getUrlFromStockCode(stockCode))
+        val doc = WebCrawler.fetchFromUrl(getCsvUrlFromStockCode(stockCode))
         return (doc.childNodes()[0].childNodes()[1].childNodes()[0] as TextNode).text()
     }
 
     data class StockDetails(val stockCode: String = NOT_APPLICABLE,
-                            val latestPriceDate: LocalDate?,
+                            val latestPriceDate: LocalDate? = null,
+                            val firstPriceDate: LocalDate? = null,
                             val oneYearReturn: String = NOT_APPLICABLE,
                             val oneYearReturnVs200: String = NOT_APPLICABLE,
                             val oneYearReturnVsSector: String = NOT_APPLICABLE)
