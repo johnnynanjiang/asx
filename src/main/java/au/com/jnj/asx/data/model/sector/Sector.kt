@@ -1,4 +1,4 @@
-package au.com.jnj.asx.domain.sector
+package au.com.jnj.asx.data.model.sector
 
 import au.com.jnj.asx.util.WebCrawler
 import org.json.JSONObject

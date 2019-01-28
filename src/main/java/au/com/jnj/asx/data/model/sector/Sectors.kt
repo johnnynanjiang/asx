@@ -1,4 +1,4 @@
-package au.com.jnj.asx.domain.sector
+package au.com.jnj.asx.data.model.sector
 
 import org.supercsv.io.CsvBeanWriter
 import org.supercsv.prefs.CsvPreference

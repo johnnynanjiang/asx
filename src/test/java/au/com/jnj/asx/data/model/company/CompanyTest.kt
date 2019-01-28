@@ -1,4 +1,4 @@
-package au.com.jnj.asx.domain.company
+package au.com.jnj.asx.data.model.company
 
 import au.com.jnj.asx.util.Integration
 import org.junit.Assert.*
