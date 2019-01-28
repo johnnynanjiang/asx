@@ -1,12 +1,10 @@
-package au.com.jnj.asx.sector
+package au.com.jnj.asx.domain.sector
 
 import au.com.jnj.asx.util.Integration
 import au.com.jnj.asx.util.TestUtils
 import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Ignore
-import java.io.*
-import java.nio.charset.Charset
 
 /**
  * Created by nanjiang on 15/12/18.

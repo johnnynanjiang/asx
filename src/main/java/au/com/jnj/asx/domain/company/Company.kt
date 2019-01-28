@@ -1,6 +1,6 @@
-package au.com.jnj.asx.company
+package au.com.jnj.asx.domain.company
 
-import au.com.jnj.asx.sector.NOT_APPLICABLE
+import au.com.jnj.asx.domain.sector.NOT_APPLICABLE
 import au.com.jnj.asx.util.WebCrawler
 import org.jsoup.nodes.TextNode
 import java.time.LocalDate

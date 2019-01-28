@@ -1,4 +1,4 @@
-package au.com.jnj.asx.sector
+package au.com.jnj.asx.domain.sector
 
 import au.com.jnj.asx.util.Integration
 import org.junit.Assert.*

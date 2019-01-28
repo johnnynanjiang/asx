@@ -6,7 +6,7 @@
  * user guide available at https://docs.gradle.org/4.10/userguide/tutorial_java_projects.html
  */
 
-group 'au.com.jnj.asx.sector'
+group 'au.com.jnj.asx.domain.sector'
 
 version '1.0-SNAPSHOT'
 

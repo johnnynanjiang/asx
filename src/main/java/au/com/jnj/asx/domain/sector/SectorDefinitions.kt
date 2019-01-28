@@ -1,4 +1,4 @@
-package au.com.jnj.asx.sector
+package au.com.jnj.asx.domain.sector
 
 /**
  * Created by nanjiang on 16/12/18.
